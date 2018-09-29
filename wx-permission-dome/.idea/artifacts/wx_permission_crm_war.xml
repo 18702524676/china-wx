@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="wx-permission-crm:war">
+    <output-path>$PROJECT_DIR$/wx-permission/wx-permission-crm/target</output-path>
+    <root id="archive" name="wx-permission-crm-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="wx-permission-crm:war exploded" />
+    </root>
+  </artifact>
+</component>

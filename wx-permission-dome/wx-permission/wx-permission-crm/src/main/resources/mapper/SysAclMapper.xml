@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wx.permission.dao.SysAclMapper" >
+
+  <!--开启redis二级缓存，注意如果是连表查询，在select标签加上useCache=false 不使用二级缓存，这样做的目的是为了防止脏数据-->
+  <!--insert、update、delete语句,flushCache默认为true，表示任何时候语句被调用，都会导致本地缓存和二级缓存被清-->
+  <cache type="com.wx.redis.cache.RedisCache"/>
+
+  <resultMap id="BaseResultMap" type="com.wx.permission.model.SysAcl" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="acl_module_id" property="aclModuleId" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="seq" property="seq" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
+    <result column="operate_ip" property="operateIp" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, name, acl_module_id, url, type, status, seq, remark, operator, operate_time, 
+    operate_ip
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_acl
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_acl
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="com.wx.permission.model.SysAcl" >
+    insert into sys_acl (id, code, name, 
+      acl_module_id, url, type, 
+      status, seq, remark, 
+      operator, operate_time, operate_ip
+      )
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{aclModuleId,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{seq,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, #{operateIp,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyProperty="id" parameterType="com.wx.permission.model.SysAcl" >
+    insert into sys_acl
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="aclModuleId != null" >
+        acl_module_id,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="seq != null" >
+        seq,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="operateTime != null" >
+        operate_time,
+      </if>
+      <if test="operateIp != null" >
+        operate_ip,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="aclModuleId != null" >
+        #{aclModuleId,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateIp != null" >
+        #{operateIp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wx.permission.model.SysAcl" >
+    update sys_acl
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="aclModuleId != null" >
+        acl_module_id = #{aclModuleId,jdbcType=INTEGER},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="seq != null" >
+        seq = #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operateTime != null" >
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateIp != null" >
+        operate_ip = #{operateIp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wx.permission.model.SysAcl" >
+    update sys_acl
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      acl_module_id = #{aclModuleId,jdbcType=INTEGER},
+      url = #{url,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      seq = #{seq,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      operator = #{operator,jdbcType=VARCHAR},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      operate_ip = #{operateIp,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--wx 根据条件查询 2018-9-4 -->
+  <select id="getByCondition" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_acl
+    <where>
+      <if test="name != null and name != ''">
+       and   name = #{name}
+      </if>
+      <if test="aclModuleId != null and aclModuleId != ''" >
+       and acl_module_id = #{aclModuleId}
+      </if>
+    </where>
+  </select>
+
+  <!--wx 根据条件查询总数 2018-9-4 -->
+  <select id="countByCondition" resultType="java.lang.Integer">
+    select
+    count(1)
+    from sys_acl
+    <where>
+      <if test="name != null and name != ''">
+        and locate(#{name},name)
+      </if>
+      <if test="aclModuleId != null and aclModuleId != ''" >
+        and acl_module_id = #{aclModuleId}
+      </if>
+    </where>
+  </select>
+
+  <!--wx 根据条件查询总数 2018-9-4 -->
+  <select id="getPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_acl
+    <where>
+      <if test="name != null and name != ''">
+        and locate(#{name},name)
+      </if>
+      <if test="aclModuleId != null and aclModuleId != ''" >
+        and acl_module_id = #{aclModuleId}
+      </if>
+    </where>
+    ORDER BY seq ASC, name ASC
+    limit #{offset}, #{pageSize}
+  </select>
+
+  <!--wx 获取所有权限 2018-9-7 -->
+  <select id="getAll" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM sys_acl
+  </select>
+
+  <!--wx 根据权限id集合查询权限数据 2018-9-8-->
+  <select id="getByIdList"  resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM sys_acl
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </select>
+  <!--wx 根据url查询权限，如果有使用resful风格，可以使用正则表达式 2018-9-13 -->
+  <select id="getByUrl" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM sys_acl
+    WHERE url = #{url} <!-- url is not null and url != '' and  #{url} REGEXP url-->
+  </select>
+
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/wx-lib/wx-commons/wx-commons.iml" filepath="$PROJECT_DIR$/wx-lib/wx-commons/wx-commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wx-lib/wx-core/wx-core.iml" filepath="$PROJECT_DIR$/wx-lib/wx-core/wx-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wx-lib/wx-lib.iml" filepath="$PROJECT_DIR$/wx-lib/wx-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wx-permission/wx-permission.iml" filepath="$PROJECT_DIR$/wx-permission/wx-permission.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wx-permission/wx-permission-api/wx-permission-api.iml" filepath="$PROJECT_DIR$/wx-permission/wx-permission-api/wx-permission-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wx-permission/wx-permission-crm/wx-permission-crm.iml" filepath="$PROJECT_DIR$/wx-permission/wx-permission-crm/wx-permission-crm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wx-permission-dome.iml" filepath="$PROJECT_DIR$/wx-permission-dome.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wx-lib/wx-reids/wx-reids.iml" filepath="$PROJECT_DIR$/wx-lib/wx-reids/wx-reids.iml" />
+    </modules>
+  </component>
+</project>

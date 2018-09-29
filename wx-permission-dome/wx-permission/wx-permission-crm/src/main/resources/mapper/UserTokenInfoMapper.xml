@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wx.permission.dao.UserTokenInfoMapper" >
+
+  <!--开启redis二级缓存，注意如果是连表查询，在select标签加上useCache=false 不使用二级缓存，这样做的目的是为了防止脏数据-->
+  <!--insert、update、delete语句,flushCache默认为true，表示任何时候语句被调用，都会导致本地缓存和二级缓存被清-->
+  <cache type="com.wx.redis.cache.RedisCache"/>
+
+  <resultMap id="BaseResultMap" type="com.wx.permission.model.UserTokenInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="access_token" property="accessToken" jdbcType="VARCHAR" />
+    <result column="refresh_time" property="refreshTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, access_token, refresh_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_token_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_token_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wx.permission.model.UserTokenInfo" >
+    insert into user_token_info (id, user_id, access_token, 
+      refresh_time)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{accessToken,jdbcType=VARCHAR}, 
+      #{refreshTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wx.permission.model.UserTokenInfo" >
+    insert into user_token_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="accessToken != null" >
+        access_token,
+      </if>
+      <if test="refreshTime != null" >
+        refresh_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="accessToken != null" >
+        #{accessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="refreshTime != null" >
+        #{refreshTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wx.permission.model.UserTokenInfo" >
+    update user_token_info
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="accessToken != null" >
+        access_token = #{accessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="refreshTime != null" >
+        refresh_time = #{refreshTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.wx.permission.model.UserTokenInfo" >
+    update user_token_info
+    set user_id = #{userId,jdbcType=INTEGER},
+      access_token = #{accessToken,jdbcType=VARCHAR},
+      refresh_time = #{refreshTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--wx 刷新toekn 2018-9-24 -->
+  <update id="refreshToken">
+    update user_token_info
+    <set >
+      <if test="accessToken != null" >
+        access_token = #{accessToken},
+      </if>
+      <if test="refreshTime != null" >
+        refresh_time = #{refreshTime},
+      </if>
+    </set>
+    where user_id = #{userId}
+  </update>
+
+
+  <!--wx 根据对象条件查询用户token信息 2018-9-24 -->
+  <select id="getUserTokenInfoListByCondition" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_token_info
+    <where>
+      <if test="userId != null and userId != ''">
+        and user_id = #{userId}
+      </if>
+      <if test="accessToken != null and accessToken != ''">
+       and access_token = #{accessToken}
+      </if>
+    </where>
+  </select>
+
+
+  <!--wx 获取所有的用户token信息 2018-9-24 -->
+  <select id="getUserTokenInfoAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_token_info
+  </select>
+
+
+</mapper>
